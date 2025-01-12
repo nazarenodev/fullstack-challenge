@@ -1,7 +1,7 @@
-from aws_cdk import (
-    # Duration,
+from aws_cdk import (    
     Stack,
-    # aws_sqs as sqs,
+    CfnOutput,
+    aws_dynamodb as dynamodb
 )
 from constructs import Construct
 
@@ -10,10 +10,13 @@ class BackendStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        # The code that defines your stack goes here
+        # DynamoDB Tables
+        shoes_table = dynamodb.Table(
+            self, "ShoesTable",
+            partition_key = {"name": "id", "type": dynamodb.AttributeType.STRING}
+        )
 
-        # example resource
-        # queue = sqs.Queue(
-        #     self, "BackendQueue",
-        #     visibility_timeout=Duration.seconds(300),
-        # )
+        orders_table = dynamodb.Table(
+            self, "OrdersTable",
+            partition_key={"name": "order_id", "type": dynamodb.AttributeType.STRING}
+        )
