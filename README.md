@@ -16,7 +16,7 @@ This project demonstrates a fullstack application leveraging AWS services such a
 
 ## Prerequisites
 
-1. [Python](https://www.python.org/) (v3.8+)
+1. [Python](https://www.python.org/) (v3.9+)
 2. [AWS CLI](https://aws.amazon.com/cli/) configured with your credentials
 3. [AWS CDK](https://docs.aws.amazon.com/cdk/latest/guide/work-with-cdk-python.html) installed globally
 4. [Node.js](https://nodejs.org/) (v16+)
