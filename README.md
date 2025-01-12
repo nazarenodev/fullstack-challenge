@@ -26,8 +26,6 @@ This project demonstrates a fullstack application leveraging AWS services such a
 
 ## Project Structure
 <pre>
-<code>
-```plaintext
 root
 ├── backend/            # Backend directory containing AWS CDK and Lambda functions
 │   ├── cdk/            # AWS CDK app written in Python
@@ -35,6 +33,4 @@ root
 │   ├── requirements.txt # Python dependencies for CDK
 ├── frontend/           # Next.js app with TypeScript
 ├── README.md           # This file
-```
-</code>
 </pre>
