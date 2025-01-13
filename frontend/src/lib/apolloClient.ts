@@ -1,9 +1,11 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 
+const apiKey: string | undefined = process.env.NEXT_PUBLIC_GRAPHQL_API_KEY
+
 const client = new ApolloClient({
-    uri: 'https://fmavtf6tvja5die4gnqk4funum.appsync-api.eu-central-1.amazonaws.com/graphql', // Put on .env latter
+    uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
     headers: {
-        'x-api-key': '',
+        'x-api-key': apiKey || ''
     },
     cache: new InMemoryCache
 })
