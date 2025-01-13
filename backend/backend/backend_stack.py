@@ -67,3 +67,8 @@ class BackendStack(Stack):
             type_name = "Mutation",
             field_name = "createOrder"
         )
+
+        # Outputs
+        CfnOutput(self, id="GraphQLAPIURL", value=api.graphql_url, export_name="MyGraphQLAPIURL")
+        CfnOutput(self, id="GraphQLAPIKey", value=api.api_key, export_name="MyGraphQLAPIKey")
+        CfnOutput(self, id="Stack Region", value=api.graphql_url, export_name="MyRegion")
