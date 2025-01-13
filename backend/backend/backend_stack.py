@@ -40,8 +40,17 @@ class BackendStack(Stack):
             environment = {"ORDERS_TABLE": orders_table.table_name} 
         )
 
+        seeder_lambda = lambda_.Function(
+            self, "SeederFunction",
+            runtime = lambda_.Runtime.PYTHON_3_9,
+            handler = "seeder.lambda_handler",
+            code = lambda_.Code.from_asset("lambda"),
+            environment = {"SHOES_TABLE": shoes_table.table_name}
+        )
+
         # Grant Lambda access to DynamoDB
         shoes_table.grant_read_data(shoes_lambda)
+        shoes_table.grant_write_data(seeder_lambda)
         orders_table.grant_write_data(orders_lambda)
 
         # AppSync API

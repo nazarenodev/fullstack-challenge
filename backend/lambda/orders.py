@@ -16,5 +16,5 @@ def lambda_handler(event, context):
         "shippingInfo": args["shippingInfo"]
     }
 
-    table.put_item(item=order)
+    table.put_item(Item=order)
     return order
