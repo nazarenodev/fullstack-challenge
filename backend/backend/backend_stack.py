@@ -2,7 +2,7 @@ from aws_cdk import (
     Stack,
     CfnOutput,
     aws_dynamodb as dynamodb,
-    aws_lambda as _lambda,
+    aws_lambda as lambda_,
     aws_appsync as appsync
 )
 from constructs import Construct
@@ -24,20 +24,20 @@ class BackendStack(Stack):
         )
 
         # Lambda Functions
-        shoes_lambda = _lambda.Function(
+        shoes_lambda = lambda_.Function(
             self, "ShoesFunction",
-            runtime = _lambda.Runtime.PYTHON_3_9,
+            runtime = lambda_.Runtime.PYTHON_3_9,
             handler = "shoes.lambda_handler",
-            code = _lambda.Code.from_asset("lambda"),
-            environment = {"SHOES_TABLE", shoes_table.table_name} 
+            code = lambda_.Code.from_asset("lambda"),
+            environment = {"SHOES_TABLE": shoes_table.table_name} 
         )
 
-        orders_lambda = _lambda.Function(
+        orders_lambda = lambda_.Function(
             self, "OrdersFunction",
-            runtime = _lambda.Runtime.PYTHON_3_9,
+            runtime = lambda_.Runtime.PYTHON_3_9,
             handler = "orders.lambda_handler",
-            code = _lambda.Code.from_asset("lambda"),
-            environment = {"ORDERS_TABLE", orders_table.table_name} 
+            code = lambda_.Code.from_asset("lambda"),
+            environment = {"ORDERS_TABLE": orders_table.table_name} 
         )
 
         # Grant Lambda access to DynamoDB
