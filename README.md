@@ -82,3 +82,110 @@ Install the riquired Node.js packages
 npm install
 ```
 
+### 3. Deploy the backend
+Navigate to the backend/ directory and bootstrap your AWS environment
+```bash
+cd ../backend
+cdk bootstrap
+```
+
+Deploy the CDK stack
+```bash
+cdk deploy
+```
+
+This step provisions the required AWS resources:
+<pre>
+• DynamoDB table
+• AppSync GraphQL API
+• Lambda functions
+</pre>
+
+The deployment output will include the AppSync API URL.
+
+Outputs:
+<pre>
+BackendStack.GraphQLAPIKey = api-key
+BackendStack.GraphQLAPIURL = graphql-api-url
+BackendStack.StackRegion = graphql-api-stack-region
+Stack ARN:
+arn:aws:cloudformation:eu-central-1:710271912837:stack/BackendStack/d3d2f920-d181-11ef-9c04-026bd7ce6da3
+</pre>
+
+### 4. Configure the Frontend
+Navigate to the frontend/ directory
+```bash
+cd frontend/
+```
+
+Create a .env.local file in the frontend/ directory and add the following
+```bash
+NEXT_PUBLIC_GRAPHQL_ENDPOINT='the graphql url from the last step output'
+NEXT_PUBLIC_GRAPHQL_API_KEY='the graphql api-key from the last step output'
+```
+
+Start the development server
+```bash
+npm run dev
+```
+
+## Running the Project
+
+<pre>
+1. Ensure the backend is deployed and the frontend is configured.
+2. Run the frontend development server (npm run dev) to open the client in your browser.
+3. Interact with the AppSync API via the UI, which triggers the Lambda functions and DynamoDB operations.
+</pre>
+
+## Useful Commands
+
+### Backend
+
+AWS CDK (Python)
+<pre>
+  • cdk synth: Synthesize the CloudFormation template.
+  • cdk deploy: Deploy the stack to AWS.
+  • cdk destroy: Destroy the deployed stack.
+</pre>
+
+Lambda Functions
+
+Modify or update Lambda code in backend/lambda/ and re-deploy using cdk deploy.
+
+### Frontend (Next.js)
+<pre>
+  • npm run dev: Start the development server.
+  • npm run build: Build the frontend for production.
+  • npm start: Run the production build.
+</pre>
+
+## Cleanup
+
+To avoid incurring charges, clean up the resources
+
+### Destroy the CDK stack:
+```bash
+cd backend
+cdk destroy
+```
+
+### Remove your cloned repository
+```bash
+rm -Rf your-repo
+```
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request.
+
+## Contact
+
+For any questions, feel free to reach out:
+
+Email: nazarenodeveloper@gmail.com
+
+GitHub: nazarenodev
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
