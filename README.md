@@ -24,7 +24,7 @@ This project demonstrates a fullstack application leveraging AWS services such a
 
 ---
 
-## Project Structure
+## Project Structure Overview
 <pre>
 root
 ├── backend/            # Backend directory containing AWS CDK and Lambda functions
@@ -34,3 +34,51 @@ root
 ├── frontend/           # Next.js app with TypeScript
 ├── README.md           # This file
 </pre>
+
+---
+
+## Setup Instructions
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/nazarenodev/fullstack-challenge.git
+cd fullstack-challenge
+```
+
+### 2. Install the dependencies
+
+### For the backend
+Navigate to the backend/ directory
+```bash
+cd backend
+```
+
+Create and activate a Python virtual environment
+```bash
+python3 -m venv .env
+source .env/bin/activate # On windows: .env\Scripts\activate
+```
+
+Install the required Python packages
+```bash
+pip install -r requirements.txt
+```
+
+Install the AWS CDK globally if not already installed
+```bash
+npm install -g aws-cdk
+```
+
+### For the Frontend
+
+Navigate to the frontend/ directory
+```bash
+cd ../frontend
+```
+
+Install the riquired Node.js packages
+```bash
+npm install
+```
+
