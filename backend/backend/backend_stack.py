@@ -3,6 +3,7 @@ from aws_cdk import (
     CfnOutput,
     aws_dynamodb as dynamodb,
     aws_lambda as _lambda,
+    aws_appsync as appsync
 )
 from constructs import Construct
 
@@ -42,3 +43,27 @@ class BackendStack(Stack):
         # Grant Lambda access to DynamoDB
         shoes_table.grant_read_data(shoes_lambda)
         orders_table.grant_write_data(orders_lambda)
+
+        # AppSync API
+        api = appsync.GraphqlApi(
+            self, "ShoeStoreApi",
+            name = "ShoeStoreApi",
+            schema = appsync.SchemaFile.from_asset("schema/schema.graphql")
+        )
+
+        # AppSync Data Sources
+        shoes_data_source = api.add_lambda_data_source("ShoesDataSource", shoes_lambda)
+        orders_data_source = api.add_lambda_data_source("OrdersDataSource", orders_lambda)
+
+        # AppSync Resolvers
+        shoes_data_source.create_resolver(
+            id = "getshoesresolver",
+            type_name = "Query",
+            field_name = "getShoes"
+        )
+
+        orders_data_source.create_resolver(
+            id = "createorderresolver",
+            type_name = "Mutation",
+            field_name = "createOrder"
+        )

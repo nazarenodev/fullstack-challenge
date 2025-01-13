@@ -1,0 +1,22 @@
+type Shoe {
+    id: ID!
+    brand: String!
+    availableSizes: [Int!]!
+    price: Float!
+}
+
+type Order {
+    orderId: ID!
+    client: String!
+    shoeRef: ID!
+    size: Int!
+    shippingInfo: String!
+}
+
+type Query {
+    getShoes(brand: String): [Shoe]
+}
+
+type Mutation {
+    createOrder(client: String!, shoeRef: ID!, size: Int!, shippingInfo: String!): Order
+}
