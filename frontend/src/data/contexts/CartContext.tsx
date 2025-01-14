@@ -1,6 +1,9 @@
+'use client';
+
 import { createContext, useState } from "react";
-import CartItem from "../model/cartItem";
+
 import { Shoe } from "../model/Shoe";
+import CartItem from "../model/CartItem";
 
 interface CartContextProps {
     items: CartItem[]
