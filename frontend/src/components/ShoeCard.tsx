@@ -1,9 +1,5 @@
-export interface Shoe {
-    id: string;
-    brand: string;
-    availableSizes: number[];
-    price: number;
-}
+import { Shoe } from "@/data/model/Shoe";
+
 
 export default function ShoeCard({ shoe }: { shoe: Shoe }) {
     return (
