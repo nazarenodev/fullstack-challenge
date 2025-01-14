@@ -5,11 +5,19 @@ type Shoe {
     price: Float!
 }
 
+type OrderItem {
+    shoeId: ID!
+    brand: String!
+    size: Int!
+    quantity: Int!
+    price: Float!
+}
+
 type Order {
     orderId: ID!
     client: String!
-    shoeRef: ID!
-    size: Int!
+    items: [OrderItem!]!
+    totalPrice: Float!
     shippingInfo: String!
 }
 
@@ -18,5 +26,13 @@ type Query {
 }
 
 type Mutation {
-    createOrder(client: String!, shoeRef: ID!, size: Int!, shippingInfo: String!): Order
+    createOrder(client: String!, items: [OrderItemInput!]!, totalPrice: Float!, shippingInfo: String!): Order
+}
+
+input OrderItemInput {
+    shoeId: ID!
+    brand: String!
+    size: Int!
+    quantity: Int!
+    price: Float!
 }
