@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import client from '../../lib/apolloClient';
 import { GET_SHOES } from '../../lib/graphql/queries';
-import ShoeCard from '../../components/ShoeCard';
+import ShoeCard from '../../components/shoe/ShoeCard';
 
 export default function Shoes() {
   const [brand, setBrand] = useState<string>('');

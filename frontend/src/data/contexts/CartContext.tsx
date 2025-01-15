@@ -1,9 +1,10 @@
 'use client';
 
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 import { Shoe } from "../model/Shoe";
 import CartItem from "../model/CartItem";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 interface CartContextProps {
     items: CartItem[]
@@ -16,6 +17,14 @@ const CartContext = createContext<CartContextProps>({} as any);
 
 export function CartProvider(props: any) {
     const [items, setItems] = useState<CartItem[]>([]);
+    const { set, get } = useLocalStorage()
+
+    useEffect(() => {
+        const cart = get('shoe-store-cart');
+        if (cart) {
+            setItems(cart);
+        }
+    }, [get])
     
     function addItem(shoe: Shoe) {
         const itemIndex = items.findIndex((i) => i.shoe.id === shoe.id);
@@ -42,6 +51,7 @@ export function CartProvider(props: any) {
 
     function updateItems(newItems: CartItem[]) {
         setItems(newItems);
+        set('shoe-store-cart', newItems)
     }
 
     return (

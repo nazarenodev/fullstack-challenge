@@ -16,7 +16,7 @@ export default function ShoeCard(props: ShoeCardProps) {
                 <h2 className="text-xl font-bold">{brand}</h2>                
                 <h2 className="text-sm">Sizes: {availableSizes.join(', ')}</h2>                
                 <div className="flex justify-between items-center">
-                    <span className="text-lg font-semibold mt-2">R$ {price.toFixed(2)}</span>
+                    <span className="text-lg font-semibold mt-2">€ {price.toFixed(2)}</span>
                     <button
                         onClick={() => addItem(props.shoe)}
                         className="border rounded-full px-5 py-1 text-sm"
