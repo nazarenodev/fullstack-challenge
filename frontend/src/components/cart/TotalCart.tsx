@@ -1,9 +1,14 @@
 'use client';
 
 import CartContext from '@/data/contexts/CartContext';
+import CartItem from '@/data/model/CartItem';
 import { useContext, useState } from 'react';
 
-export default function TotalCart() {
+export interface TotalCartProps {
+    items: CartItem[]
+}
+
+export default function TotalCart(props: TotalCartProps) {
     const { items, finishCart } = useContext(CartContext);
     const [client, setClient] = useState(''); // For client ID input
     const [shippingInfo, setShippingInfo] = useState(''); // For shipping info input
