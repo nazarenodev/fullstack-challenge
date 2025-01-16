@@ -70,6 +70,13 @@ Install the AWS CDK globally if not already installed
 npm install -g aws-cdk
 ```
 
+Run the seeder lambda function. You can get it from the output log of the cdk deploy command
+```bash
+aws lambda invoke \
+    --function-name <SeederFunctionName> \    
+    response.json
+``` 
+
 ### For the Frontend
 
 Navigate to the frontend/ directory

@@ -80,4 +80,4 @@ class BackendStack(Stack):
         # Outputs
         CfnOutput(self, id="GraphQLAPIURL", value=api.graphql_url, export_name="MyGraphQLAPIURL")
         CfnOutput(self, id="GraphQLAPIKey", value=api.api_key, export_name="MyGraphQLAPIKey")
-        CfnOutput(self, id="Stack Region", value=api.graphql_url, export_name="MyRegion")
+        CfnOutput(self, id="SeederFunctionName", value=seeder_lambda.function_name, export_name="SeederFunctionName")
