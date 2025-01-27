@@ -7,7 +7,7 @@ export interface ShoeCardProps {
 
 export default function ShoeCard(props: ShoeCardProps) {
     const { addItem } = useCart();
-
+ 
     const { brand, price, availableSizes } = props.shoe;
 
     return (

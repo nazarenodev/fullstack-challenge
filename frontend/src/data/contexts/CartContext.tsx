@@ -1,7 +1,6 @@
 'use client';
 
 import { createContext, useEffect, useState } from "react";
-
 import { Shoe } from "../model/Shoe";
 import CartItem from "../model/CartItem";
 import useLocalStorage from "../hooks/useLocalStorage";
@@ -10,33 +9,37 @@ import { useMutation } from "@apollo/client";
 import { CREATE_ORDER } from "@/lib/graphql/mutations";
 
 interface CartContextProps {
-    children?: React.ReactNode
-    items?: CartItem[]
-    itemsQtd?: number
-    addItem?: (item: Shoe) => void
-    removeItem?: (item: Shoe) => void
-    finishCart?: (clientId: string, shippingInfo: string) => void
+    items: CartItem[]; // Required
+    itemsQtd: number; // Required
+    addItem: (item: Shoe) => void; // Required
+    removeItem: (item: Shoe) => void; // Required
+    finishCart: (clientId: string, shippingInfo: string) => Promise<void>; // Required
+}
+// Updated CartProviderProps to include 'children'
+interface CartProviderProps {
+    children: React.ReactNode;
 }
 
-const CartContext = createContext<CartContextProps>({} as any);
+// Initialize CartContext with a default type but no default value (to allow null checks in consumers)
+const CartContext = createContext<CartContextProps | null>({} as any);
 
-export function CartProvider(props: CartContextProps) {
+export function CartProvider({ children }: CartProviderProps) {
     const [items, setItems] = useState<CartItem[]>([]);
-    const { set, get } = useLocalStorage()
-    const [createOrder] = useMutation(CREATE_ORDER, {client});
+    const { set, get } = useLocalStorage();
+    const [createOrder] = useMutation(CREATE_ORDER, { client });
 
     useEffect(() => {
         const cart = get('shoe-store-cart');
         if (cart) {
             setItems(cart);
         }
-    }, [get])
-    
+    }, [get]);
+
     function addItem(shoe: Shoe) {
         const itemIndex = items.findIndex((i) => i.shoe.id === shoe.id);
 
         if (itemIndex === -1) {
-            updateItems([...items, {shoe, quantity: 1}]);
+            updateItems([...items, { shoe, quantity: 1 }]);
         } else {
             const newItems = [...items];
             newItems[itemIndex].quantity++;
@@ -45,24 +48,26 @@ export function CartProvider(props: CartContextProps) {
     }
 
     function removeItem(shoe: Shoe) {
-        const newItems = items.map((i) => {
-            if (i.shoe.id === shoe.id) {
-                i.quantity--;
-            }
-            return i
-        }).filter((i) => i.quantity > 0)
+        const newItems = items
+            .map((i) => {
+                if (i.shoe.id === shoe.id) {
+                    i.quantity--;
+                }
+                return i;
+            })
+            .filter((i) => i.quantity > 0);
 
         updateItems(newItems);
     }
 
     function updateItems(newItems: CartItem[]) {
         setItems(newItems);
-        set('shoe-store-cart', newItems)
+        set('shoe-store-cart', newItems);
     }
 
     async function finishCart(clientId: string, shippingInfo: string): Promise<void> {
         const totalPrice = items.reduce((total, item) => total + item.shoe.price * item.quantity, 0);
-    
+
         const orderItems = items.map(({ shoe, quantity }) => ({
             shoeId: shoe.id,
             brand: shoe.brand,
@@ -70,7 +75,7 @@ export function CartProvider(props: CartContextProps) {
             price: shoe.price,
             quantity,
         }));
-    
+
         try {
             const { data } = await createOrder({
                 variables: {
@@ -80,7 +85,7 @@ export function CartProvider(props: CartContextProps) {
                     shippingInfo,
                 },
             });
-    
+
             if (data) {
                 console.log('Order successfully created:', data.createOrder);
                 setItems([]);
@@ -102,14 +107,12 @@ export function CartProvider(props: CartContextProps) {
                 addItem,
                 removeItem,
                 finishCart,
-                get itemsQtd() {
-                    return items.reduce((total, item) => total + item.quantity, 0 );
-                }
+                itemsQtd: items.reduce((total, item) => total + item.quantity, 0),
             }}
         >
-            {props.children}
+            {children}
         </CartContext.Provider>
-    )
+    );
 }
 
 export default CartContext;

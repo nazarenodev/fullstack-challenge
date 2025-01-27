@@ -13,7 +13,7 @@ export default function TotalCart(props: TotalCartProps) {
     const [client, setClient] = useState(''); // For client ID input
     const [shippingInfo, setShippingInfo] = useState(''); // For shipping info input
 
-    const total = items.reduce((acc, item) => acc + item.shoe.price * item.quantity, 0);
+    const total = items?.reduce((acc, item) => acc + item.shoe.price * item.quantity, 0);
 
     const handleOrderClick = async () => {
         if (!client || !shippingInfo) {
@@ -21,7 +21,9 @@ export default function TotalCart(props: TotalCartProps) {
             return;
         }
 
-        await finishCart(client, shippingInfo); // Get the finishCart handler
+        if (finishCart) {
+            await finishCart(client, shippingInfo); // Get the finishCart handler
+        }
     };
 
     return (
@@ -29,7 +31,7 @@ export default function TotalCart(props: TotalCartProps) {
             <div className='flex items-center justify-between'>
                 <div className='flex flex-col'>
                     <span className='text-zinc-500'>Total</span>
-                    <span className='text-3xl font-bold text-yellow-500'>€ {total.toFixed(2)}</span>
+                    <span className='text-3xl font-bold text-yellow-500'>€ {total?.toFixed(2)}</span>
                 </div>
             </div>
             <div className='mt-4'>
