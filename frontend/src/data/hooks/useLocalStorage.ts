@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback } from "react";
+import CartItem from "@/data/model/CartItem";
 
 export default function useLocalStorage() {
     const get = useCallback((key: string) => {
@@ -8,7 +9,7 @@ export default function useLocalStorage() {
         return value ? JSON.parse(value) : null
     }, []);
 
-    const set = useCallback((key: string, value: any) => {
+    const set = useCallback((key: string, value: CartItem[]) => {
         localStorage.setItem(key, JSON.stringify(value));
     }, [])
 

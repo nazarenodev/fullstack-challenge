@@ -10,16 +10,17 @@ import { useMutation } from "@apollo/client";
 import { CREATE_ORDER } from "@/lib/graphql/mutations";
 
 interface CartContextProps {
-    items: CartItem[]
-    itemsQtd: number
-    addItem: (item: Shoe) => void
-    removeItem: (item: Shoe) => void
-    finishCart: (clientId: string, shippingInfo: string) => void
+    children?: React.ReactNode
+    items?: CartItem[]
+    itemsQtd?: number
+    addItem?: (item: Shoe) => void
+    removeItem?: (item: Shoe) => void
+    finishCart?: (clientId: string, shippingInfo: string) => void
 }
 
 const CartContext = createContext<CartContextProps>({} as any);
 
-export function CartProvider(props: any) {
+export function CartProvider(props: CartContextProps) {
     const [items, setItems] = useState<CartItem[]>([]);
     const { set, get } = useLocalStorage()
     const [createOrder] = useMutation(CREATE_ORDER, {client});

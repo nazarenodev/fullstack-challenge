@@ -5,7 +5,7 @@ export interface BasicPageProps {
     className?: string
 }
 
-export default function BasicPage(props: any) {
+export default function BasicPage(props: BasicPageProps) {
     return (
         <div className="flex flex-col min-h-screen">
             <Header />
